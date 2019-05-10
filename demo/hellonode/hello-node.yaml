@@ -1,0 +1,39 @@
+apiVersion: v1
+kind: Service
+metadata: 
+  name: test-sercice
+  labels:
+    version: v2
+    run: hello-node
+    app: test-sercice
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 3001
+    targetPort: 3000
+    protocol: TCP
+  selector:
+    app: test-sercice
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: test-service
+  labels:
+    app: test-sercice
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: test-sercice
+  template:
+    metadata:
+      labels:
+        app: test-sercice
+    spec:
+      containers:
+      - name: node-pod
+        image: hello-node:v2
+        imagePullPolicy: IfNotPresent
+        ports: 
+        - containerPort: 3000
