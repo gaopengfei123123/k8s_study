@@ -1,11 +1,11 @@
 apiVersion: v1
 kind: Service
 metadata: 
-  name: test-sercice
+  name: test-service
   labels:
     version: v2
     run: hello-node
-    app: test-sercice
+    app: test-service
 spec:
   type: LoadBalancer
   ports:
@@ -13,23 +13,23 @@ spec:
     targetPort: 3000
     protocol: TCP
   selector:
-    app: test-sercice
+    app: test-service
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: test-service
   labels:
-    app: test-sercice
+    app: test-service
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: test-sercice
+      app: test-service
   template:
     metadata:
       labels:
-        app: test-sercice
+        app: test-service
     spec:
       containers:
       - name: node-pod
