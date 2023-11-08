@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: busy-pod
+  labels:
+    name: busy-pod
+    env: demo
+spec:
+  containers:
+  - name: busy-pod
+    image: busybox:latest
+    imagePullPolicy: IfNotPresent
+    env:
+      - name: os
+        value: "macOS"
+      - name: debug
+        value: "on"
+    resources:
+      limits:
+        memory: "128Mi"
+        cpu: "500m"
+    command:
+      - /bin/echo
+    args:
+      - "$(os), $(debug)"

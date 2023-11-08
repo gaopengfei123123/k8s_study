@@ -1,0 +1,19 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  creationTimestamp: null
+  name: echo-job
+spec:
+  template:
+    metadata:
+      creationTimestamp: null
+    spec:
+      restartPolicy: Never
+      containers:
+      - image: busybox
+        name: echo-job
+        resources: {}
+        command: ["/bin/echo"]
+        args: ["hello", "world"]
+      
+status: {}

@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: vol-pod
+
+spec:
+  volumes:   # 构建数据卷, 并且数据卷和容器是平级的关系
+  - name: cm-vol
+    configMap:
+      name: info
+  - name: sec-vol
+    secret:
+      secretName: user
+
+  containers:  # 在容器中挂载数据卷,
+  - volumeMounts:   
+    - mountPath: /tmp/cm-items
+      name: cm-vol
+    - mountPath: /tmp/sec-items
+      name: sec-vol
+
+    image: busybox
+    name: busy
+    imagePullPolicy: IfNotPresent
+    command: ["/bin/sleep", "300"]

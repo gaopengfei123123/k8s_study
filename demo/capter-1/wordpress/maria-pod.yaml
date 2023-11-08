@@ -1,0 +1,26 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: maria-pod
+  labels:
+    app: wordpress
+    role: database
+
+spec:
+  containers:
+  - name: mariaxxx
+    image: mariadb:10
+    imagePullPolicy: IfNotPresent
+    resources:  # 单个容器内需要限制资源用量
+      limits:
+        memory: 512Mi
+        cpu: "1"
+      requests:
+        memory: 256Mi
+        cpu: "0.2"
+    ports:
+    - containerPort: 3306
+    envFrom:
+    - prefix: 'MARIADB_'
+      configMapRef:
+        name: maria-cm
